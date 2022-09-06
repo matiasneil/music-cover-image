@@ -1,0 +1,85 @@
+@font-face {
+  font-family: "GothamLight";
+  src: url("../fonts/GothamLight.ttf");
+}
+
+@font-face {
+  font-family: "GothamMedium";
+  src: url("../fonts/GothamMedium.ttf");
+}
+
+@font-face {
+  font-family: "GothamBold";
+  src: url("../fonts/GothamBold.ttf");
+}
+
+.artist {
+  font-family: "GothamMedium";
+  font-size: 30px;
+}
+
+.song {
+  font-family: "GothamBold";
+  font-size: 30px;
+}
+
+.trackTime {
+  font-family: "GothamBold";
+  font-size: 15px;
+}
+
+.cover {
+  width: 1500px;
+  height: 500px;
+  padding: 50px 250px 50px 250px;
+}
+
+.switchContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.trackTime {
+  font-size: 20px;
+}
+
+.timeBar {
+  height: 2px;
+}
+
+.timeBar .currentTimeBar {
+  position: relative;
+  top: -50%;
+  height: 4px;
+  width: 70%;
+}
+
+.timeBar .currentTimeBar .currentTimeDot {
+  position: relative;
+  left: 100%;
+  top: -120%;
+
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+}
+
+@media screen and (min-width: 300px) {
+  .cover {
+    transform: scale(0.3);
+  }
+}
+
+@media screen and (min-width: 700px) {
+  .cover {
+    transform: scale(0.5);
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .cover {
+    transform: scale(0.7);
+  }
+}
