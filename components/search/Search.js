@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import styles from "./Search.module.css";
 
 function Search(props) {
   const router = useRouter();
@@ -9,7 +10,7 @@ function Search(props) {
   const [loading, setLoading] = useState(false);
 
   const searchEndpoint = (query) =>
-    `	https://api.spotify.com/v1/search?q=${query}&type=track&limit=4`;
+    `	https://api.spotify.com/v1/search?q=${query}&type=track&limit=10`;
 
   const onChange = useCallback((event) => {
     const query = event.target.value;
@@ -72,40 +73,42 @@ function Search(props) {
           </button>
         </div>
       </div>
-      {!loading &&
-        results.length > 0 &&
-        results.map((result) => (
-          <div
-            key={result.id}
-            className="box is-flex is-flex-direction-row is-align-items-center"
-          >
-            <img
-              src={result.album.images[2].url}
-              width={result.album.images[2].width}
-              className="mr-3"
-              height={result.album.images[2].height}
-            ></img>
-            <div className="is-flex is-flex-direction-column">
-              <span>{result.name}</span>
-              <span>{result.album.name}</span>
-              <span>{result.artists[0].name}</span>
+      {!loading && results.length > 0 && (
+        <div className={styles.resultsContainer}>
+          {results.map((result) => (
+            <div
+              key={result.id}
+              className="box is-flex is-flex-direction-row is-align-items-center"
+            >
+              <img
+                src={result.album.images[2].url}
+                width={result.album.images[2].width}
+                className="mr-3"
+                height={result.album.images[2].height}
+              ></img>
+              <div className="is-flex is-flex-direction-column">
+                <span>{result.name}</span>
+                <span>{result.album.name}</span>
+                <span>{result.artists[0].name}</span>
+              </div>
+              <div className="is-flex is-flex-direction-column is-flex-grow-1">
+                <button
+                  className="button is-align-self-flex-end is-light"
+                  onClick={() => {
+                    setLoading(true);
+                    router.push({
+                      pathname: "/create",
+                      query: { data: JSON.stringify(result) },
+                    });
+                  }}
+                >
+                  Select
+                </button>
+              </div>
             </div>
-            <div className="is-flex is-flex-direction-column is-flex-grow-1">
-              <button
-                className="button is-align-self-flex-end is-light"
-                onClick={() => {
-                  setLoading(true);
-                  router.push({
-                    pathname: "/create",
-                    query: { data: JSON.stringify(result) },
-                  });
-                }}
-              >
-                Select
-              </button>
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
+      )}
       {loading && (
         <progress className="progress is-small is-info" max="100">
           15%

@@ -1,0 +1,6 @@
+.resultsContainer {
+    overflow: scroll;
+    overflow-x: hidden;
+    max-height: 65vh;
+    padding-right: 10px;
+}

@@ -27,6 +27,18 @@ a {
   border: solid 1px #eeeeee;
 }
 
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #dddddd;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #777777;
+}
+
 /*
 @media (prefers-color-scheme: dark) {
   html {
