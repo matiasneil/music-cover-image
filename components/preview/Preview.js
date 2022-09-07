@@ -4,7 +4,7 @@ import styles from "./Preview.module.css";
 function Preview() {
   const [count, setCount] = useState(0);
 
-  const covers = ["prince", "taylor", "rina"];
+  const covers = ["taylor", "prince", "rina", "radiohead"];
   const [cover, setCover] = useState(covers[0]);
 
   const limit = covers.length;
@@ -18,7 +18,7 @@ function Preview() {
       } else {
         setCount(0);
       }
-    }, 3000);
+    }, 2000);
 
     return () => {
       console.log("clear interval");
