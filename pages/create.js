@@ -9,8 +9,11 @@ import ColorSelect from "../components/color-select/ColorSelect";
 
 export default function Create() {
   const router = useRouter();
-  const [color, setColor] = useState("white");
+  const result = JSON.parse(router.query.data);
 
+  /* STATES */
+  const [color, setColor] = useState("white");
+  const [palette, setPalette] = useState([]);
   const [background, setBackground] = useState("solid");
   const [backgroundColor, setBackgroundColor] = useState("");
   const [backgroundGradient, setBackgroundGradient] = useState({
@@ -18,13 +21,30 @@ export default function Create() {
     end: "",
   });
 
-  const [palette, setPalette] = useState([]);
 
-  const result = JSON.parse(router.query.data);
-
+  /* GET VALUES FROM SONG */
   const trackLengthInSeconds = Math.floor(result.duration_ms / 1000);
   const currentTimeInSeconds = Math.floor(trackLengthInSeconds * 0.7);
 
+  const trackName =
+    result.name.length > 60
+      ? result.name.substring(0, 60).concat("...")
+      : result.name;
+
+  const trackArtists = (artists) => {
+    let artistsLabel = "";
+    artists.forEach((artist, i) =>
+      i > 0
+        ? (artistsLabel = artistsLabel.concat(`, ${artist.name}`))
+        : (artistsLabel = artistsLabel.concat(`${artist.name}`))
+    );
+
+    return artistsLabel.length > 60
+      ? artistsLabel.substring(0, 60).concat("...")
+      : artistsLabel;
+  };
+
+  /* LOAD PALETTE AND SET COLORS */
   useEffect(() => {
     Vibrant.from(`${result.album.images[1].url}`).getPalette((err, palette) => {
       let paletteArray = [];
@@ -43,37 +63,6 @@ export default function Create() {
     });
   }, []);
 
-  const saveImage = () => {
-    html2canvas(document.querySelector("#capture"), {
-      logging: true,
-      letterRendering: 1,
-      allowTaint: false,
-      useCORS: true,
-    }).then((canvas) => {
-      saveAs(canvas.toDataURL(), `${result.name} - Cover`);
-    });
-  };
-
-  const saveAs = (uri, filename) => {
-    var link = document.createElement("a");
-
-    if (typeof link.download === "string") {
-      link.href = uri;
-      link.download = filename;
-
-      //Firefox requires the link to be in the body
-      document.body.appendChild(link);
-
-      //simulate click
-      link.click();
-
-      //remove the link when done
-      document.body.removeChild(link);
-    } else {
-      window.open(uri);
-    }
-  };
-
   return (
     <>
       <div className="container is-flex is-align-items-center is-flex-direction-column">
@@ -84,7 +73,7 @@ export default function Create() {
         */}
 
         <div
-          className={`${styles.cover} is-flex is-flex-direction-column is-justify-content-center`}
+          className={`${styles.cover} is-flex is-flex-direction-column is-justify-content-center my-5`}
           style={{
             background:
               background == "solid"
@@ -93,37 +82,30 @@ export default function Create() {
           }}
           id="capture"
         >
-          <div className="is-flex">
+          <div className="is-flex is-align-items-center">
             <img
               src={result.album.images[1].url}
-              width={result.album.images[1].width}
-              height={result.album.images[1].height}
+              className={styles.albumImg}
             ></img>
 
             <div
               className="is-flex is-flex-direction-column is-justify-content-space-around py-5"
               style={{ width: "100%", paddingLeft: "20px" }}
             >
-              <div>
+              <div className="mb-3">
                 <div
                   className="is-flex is-flex-direction-column"
                   style={{ color: color }}
                 >
-                  <span className={styles.song}>{result.name}</span>
+                  <span className={styles.song}>{trackName}</span>
                   <span className={styles.artist}>
-                    {result.artists.map((artist, i) =>
-                      i > 0 ? (
-                        <span key={i}>, {artist.name}</span>
-                      ) : (
-                        <span key={i}>{artist.name}</span>
-                      )
-                    )}
+                    {trackArtists(result.artists)}
                   </span>
                 </div>
               </div>
 
               <div
-                className={styles.timeBar}
+                className={`${styles.timeBar} mb-2`}
                 style={{ backgroundColor: color }}
               >
                 <div
@@ -138,7 +120,7 @@ export default function Create() {
               </div>
 
               <div
-                className={`${styles.trackTime} is-flex is-justify-content-space-between`}
+                className={`${styles.trackTime} is-flex is-justify-content-space-between mb-3`}
                 style={{ color: color }}
               >
                 <div>{getFormattedTime(currentTimeInSeconds)}</div>
@@ -239,7 +221,10 @@ export default function Create() {
           ----------------------
           */}
 
-          <button className="button is-light is-info" onClick={saveImage}>
+          <button
+            className="button is-light is-info"
+            onClick={() => saveImage(result.name)}
+          >
             Download
           </button>
         </div>
@@ -261,15 +246,42 @@ export async function getServerSideProps({ query }) {
   return { props: {} };
 }
 
-function getFormattedTime(time) {
+/* FUNCTIONS */
+
+const getFormattedTime = (time) => {
   let minutes = Math.floor(time / 60);
   let seconds = time - minutes * 60;
   let finalTime =
     str_pad_left(minutes, "0", 2) + ":" + str_pad_left(seconds, "0", 2);
 
   return finalTime;
-}
+};
 
-function str_pad_left(string, pad, length) {
+const str_pad_left = (string, pad, length) => {
   return (new Array(length + 1).join(pad) + string).slice(-length);
-}
+};
+
+const saveImage = (songName) => {
+  html2canvas(document.querySelector("#capture"), {
+    logging: true,
+    letterRendering: 1,
+    allowTaint: false,
+    useCORS: true,
+  }).then((canvas) => {
+    saveAs(canvas.toDataURL(), `${songName} - Cover`);
+  });
+};
+
+const saveAs = (uri, filename) => {
+  var link = document.createElement("a");
+
+  if (typeof link.download === "string") {
+    link.href = uri;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  } else {
+    window.open(uri);
+  }
+};

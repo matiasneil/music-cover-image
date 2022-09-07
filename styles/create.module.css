@@ -13,27 +13,31 @@
   src: url("../fonts/GothamBold.ttf");
 }
 
+@font-face {
+  font-family: "GothamBook";
+  src: url("../fonts/GothamBook.ttf");
+}
+
 .artist {
-  font-family: "GothamMedium";
-  font-size: 30px;
+  font-family: "GothamBook";
+  font-size: 25px;
+  line-height: 30px;
 }
 
 .song {
-  font-family: "GothamBold";
-  font-size: 30px;
+  font-family: "GothamMedium";
+  font-size: 25px;
+  line-height: 30px;
 }
 
 .trackTime {
-  font-family: "GothamBold";
+  font-family: "GothamLight";
   font-size: 15px;
 }
 
-.cover {
-  position: relative;
-  top: -50px;
-  width: 1500px;
-  height: 500px;
-  padding: 50px 250px 50px 250px;
+.albumImg {
+  width: 200px;
+  height: 200px;
 }
 
 .switchContainer {
@@ -45,10 +49,6 @@
 
 .switchContainer small {
   width: 30px;
-}
-
-.trackTime {
-  font-size: 20px;
 }
 
 .timeBar {
@@ -72,35 +72,57 @@
   border-radius: 50%;
 }
 
-@media screen and (min-width: 300px) {
-  .cover {
-    transform: scale(0.3);
-  }
-
-  .configurations {
-    position: relative;
-    top: -200px;
-  }
+.cover {
+  transform: scale(0.4);
+  width: 1000px;
+  height: 335px;
+  padding: 50px 150px 50px 150px;
 }
 
-@media screen and (min-width: 700px) {
+.configurations {
+  position: relative;
+  top: -100px;
+}
+
+@media screen and (min-width: 525px) {
   .cover {
     transform: scale(0.5);
   }
 
   .configurations {
     position: relative;
-    top: -150px;
+    top: -80px;
   }
 }
 
-@media screen and (min-width: 1000px) {
+@media screen and (min-width: 720px) {
   .cover {
-    transform: scale(0.6);
+    transform: scale(0.7);
   }
 
   .configurations {
     position: relative;
-    top: -100px;
+    top: -50px;
+  }
+}
+
+@media screen and (min-width: 820px) {
+  .cover {
+    transform: scale(0.8);
+  }
+
+  .configurations {
+    position: relative;
+    top: -30px;
+  }
+}
+
+@media screen and (min-width: 1025px) {
+  .cover {
+    transform: scale(1);
+  }
+
+  .configurations {
+    position: initial;
   }
 }
