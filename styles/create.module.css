@@ -29,6 +29,8 @@
 }
 
 .cover {
+  position: relative;
+  top: -50px;
   width: 1500px;
   height: 500px;
   padding: 50px 250px 50px 250px;
@@ -39,6 +41,10 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
+}
+
+.switchContainer small {
+  width: 30px;
 }
 
 .trackTime {
@@ -70,16 +76,31 @@
   .cover {
     transform: scale(0.3);
   }
+
+  .configurations {
+    position: relative;
+    top: -200px;
+  }
 }
 
 @media screen and (min-width: 700px) {
   .cover {
     transform: scale(0.5);
   }
+
+  .configurations {
+    position: relative;
+    top: -150px;
+  }
 }
 
 @media screen and (min-width: 1000px) {
   .cover {
-    transform: scale(0.7);
+    transform: scale(0.6);
+  }
+
+  .configurations {
+    position: relative;
+    top: -100px;
   }
 }

@@ -5,11 +5,19 @@ import styles from "../styles/create.module.css";
 import * as Vibrant from "node-vibrant";
 import Switch from "../components/switch/Switch";
 import html2canvas from "html2canvas";
+import ColorSelect from "../components/color-select/ColorSelect";
 
 export default function Create() {
   const router = useRouter();
   const [color, setColor] = useState("white");
-  const [backgroundColor, setBackgroundColor] = useState("white");
+
+  const [background, setBackground] = useState("solid");
+  const [backgroundColor, setBackgroundColor] = useState("");
+  const [backgroundGradient, setBackgroundGradient] = useState({
+    start: "",
+    end: "",
+  });
+
   const [palette, setPalette] = useState([]);
 
   const result = JSON.parse(router.query.data);
@@ -27,6 +35,11 @@ export default function Create() {
       paletteArray.push(palette.LightVibrant.getHex());
       paletteArray.push(palette.Vibrant.getHex());
       setPalette(paletteArray);
+
+      const firstColor = paletteArray[0];
+      setBackgroundColor(firstColor);
+
+      setBackgroundGradient({ start: firstColor, end: paletteArray[1] });
     });
   }, []);
 
@@ -37,7 +50,7 @@ export default function Create() {
       allowTaint: false,
       useCORS: true,
     }).then((canvas) => {
-      saveAs(canvas.toDataURL(), "cover.png");
+      saveAs(canvas.toDataURL(), `${result.name} - Cover`);
     });
   };
 
@@ -64,10 +77,19 @@ export default function Create() {
   return (
     <>
       <div className="container is-flex is-align-items-center is-flex-direction-column">
+        {/* 
+        ----------------------
+        --------COVER---------
+        ----------------------
+        */}
+
         <div
           className={`${styles.cover} is-flex is-flex-direction-column is-justify-content-center`}
           style={{
-            backgroundColor: backgroundColor ? backgroundColor : "white",
+            background:
+              background == "solid"
+                ? backgroundColor
+                : `linear-gradient(90deg, ${backgroundGradient.start} 0%, ${backgroundGradient.end} 100%)`,
           }}
           id="capture"
         >
@@ -133,37 +155,94 @@ export default function Create() {
             </div>
           </div>
         </div>
-        <span className="mb-1"><b>player controls</b></span>
-        <div>
-          <div className={`${styles.switchContainer} mb-5`}>
-            <p>white</p>
-            <Switch
-              onChangeFn={(isBlack) => {
-                setColor(isBlack ? "black" : "white");
-              }}
-            ></Switch>
-            <p>black</p>
-          </div>
-        </div>
-        <span className="mb-1"><b>background</b></span>
-        <div className="is-flex is-justify-content-center mb-5">
-          {palette.length > 0 &&
-            palette.map((color, i) => (
-              <div
-                key={i}
-                style={{
-                  backgroundColor: color,
-                  height: "50px",
-                  width: "50px",
-                  border: backgroundColor === color ? "4px solid" : "0px",
+
+        <div
+          className={`${styles.configurations} is-flex is-flex-direction-column is-justify-content-center`}
+        >
+          {/* 
+          ----------------------
+          ------CONTROLS------
+          ----------------------
+          */}
+
+          <span className="mb-1">
+            <b>player controls</b>
+          </span>
+          <div>
+            <div className={`${styles.switchContainer} mb-5`}>
+              <small>white</small>
+              <Switch
+                onChangeFn={(isBlack) => {
+                  setColor(isBlack ? "black" : "white");
                 }}
-                onClick={() => setBackgroundColor(color)}
-              ></div>
-            ))}
+              ></Switch>
+              <small>black</small>
+            </div>
+          </div>
+
+          {/* 
+          ----------------------
+          ------BACKGROUND------
+          ----------------------
+          */}
+
+          <span className="mb-1">
+            <b>background</b>
+          </span>
+          <div>
+            <div className={`${styles.switchContainer} mb-5`}>
+              <small>solid</small>
+              <Switch
+                onChangeFn={(isGradient) => {
+                  setBackground(isGradient ? "gradient" : "solid");
+                }}
+              ></Switch>
+              <small>gradient</small>
+            </div>
+          </div>
+
+          {background === "solid" && (
+            <>
+              <small>color</small>
+              <ColorSelect
+                palette={palette}
+                setBgColor={setBackgroundColor}
+                selectedColor={backgroundColor}
+              />
+            </>
+          )}
+
+          {background === "gradient" && (
+            <>
+              <small>from</small>
+              <ColorSelect
+                palette={palette}
+                setBgColor={(color) =>
+                  setBackgroundGradient({ ...backgroundGradient, start: color })
+                }
+                selectedColor={backgroundGradient.start}
+              />
+              <small>to</small>
+              <ColorSelect
+                palette={palette}
+                setBgColor={(color) =>
+                  setBackgroundGradient({ ...backgroundGradient, end: color })
+                }
+                selectedColor={backgroundGradient.end}
+              />
+            </>
+          )}
+
+          {/* 
+          ----------------------
+          -------DOWNLOAD-------
+          ----------------------
+          */}
+
+          <button className="button is-light is-info" onClick={saveImage}>
+            Download
+          </button>
         </div>
-        <button className="button is-light is-info" onClick={saveImage}>
-          Download
-        </button>
       </div>
     </>
   );

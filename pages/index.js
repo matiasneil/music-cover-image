@@ -1,4 +1,5 @@
 import Search from "../components/search/Search";
+import Preview from "../components/preview/Preview";
 import { getAccessToken } from "../lib/spotify";
 
 export default function Home({ data }) {
@@ -6,9 +7,9 @@ export default function Home({ data }) {
     <>
       <section className="section">
         <div className="container">
-          <h1 className="title">Create the perfect musical cover</h1>
+          <h1 className="title">Show your music taste</h1>
           <p className="subtitle">
-            Search for a track <strong>now!</strong>
+            Search for a track, build your cover and upload it to Twitter <strong>now!</strong>
           </p>
         </div>
       </section>
@@ -17,6 +18,8 @@ export default function Home({ data }) {
           <div className="columns is-centered">
             <div className="column">
               <Search accessToken={data.access_token}></Search>
+
+              <Preview />
             </div>
           </div>
         </div>

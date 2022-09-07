@@ -1,0 +1,24 @@
+.preview {
+  width: 550px;
+}
+
+.twitterLayout {
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 50px;
+  position: absolute;
+  width: max-content;
+  width: 550px;
+}
+
+.cover {
+  position: relative;
+  top: 48px;
+  z-index: -1;
+}
+
+@media screen and (max-width: 600px) {
+  .cover {
+    position: relative;
+    top: 8vw;
+    z-index: -1;
+  }
+}
