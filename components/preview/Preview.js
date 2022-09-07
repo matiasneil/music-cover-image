@@ -7,23 +7,19 @@ function Preview() {
   const covers = ["taylor", "prince", "rina", "radiohead"];
   const [cover, setCover] = useState(covers[0]);
 
-  const limit = covers.length;
+  const limit = covers.length - 1;
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCover(covers[count]);
+    const timerId = setInterval(() => {
+      // Use a functional state update to correctly increment the count
+      setCount(count => count < limit ? count + 1 : 0);
+    }, 3000);
 
-      if (count < limit - 1) {
-        setCount((count) => count + 1);
-      } else {
-        setCount(0);
-      }
-    }, 2000);
+    return () => clearInterval(timerId);
+  }, []);
 
-    return () => {
-      console.log("clear interval");
-      clearInterval(interval);
-    };
+  useEffect(() => {
+    setCover(covers[count]);
   }, [count]);
 
   return (
@@ -31,7 +27,7 @@ function Preview() {
       <div className={styles.preview}>
         <img
           src="/assets/img/twitter-layout.png"
-          className={styles.twitterLayout}
+          className={`${styles.twitterLayout} boxShadow`}
         ></img>
         <img
           src={`/assets/img/${cover}.png`}

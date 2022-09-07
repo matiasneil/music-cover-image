@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 function Search(props) {
@@ -17,10 +17,10 @@ function Search(props) {
   }, []);
 
   const onKeyDown = useCallback((event) => {
-    if(event.key === 'Enter'){
+    if (event.key === "Enter") {
       doSearch();
     }
-  })
+  });
 
   const onClick = useCallback((event) => {
     doSearch();
@@ -42,7 +42,13 @@ function Search(props) {
     } else {
       setResults([]);
     }
-  }
+  };
+
+  useEffect(() => {
+    results.length !== 0 || loading
+      ? props.setResultsShowing(true)
+      : props.setResultsShowing(false);
+  }, [results, loading]);
 
   return (
     <>
@@ -58,10 +64,16 @@ function Search(props) {
           />
         </div>
         <div className="column">
-          <button className="button is-fullwidth is-info is-light" onClick={onClick}>Search</button>
+          <button
+            className="button is-fullwidth is-info is-light"
+            onClick={onClick}
+          >
+            Search
+          </button>
         </div>
       </div>
-      {!loading && results.length > 0 &&
+      {!loading &&
+        results.length > 0 &&
         results.map((result) => (
           <div
             key={result.id}
@@ -79,18 +91,26 @@ function Search(props) {
               <span>{result.artists[0].name}</span>
             </div>
             <div className="is-flex is-flex-direction-column is-flex-grow-1">
-              <button 
-                className="button is-align-self-flex-end is-light" 
-                onClick={() => router.push({ pathname: '/create', query: { data: JSON.stringify(result) }})}
+              <button
+                className="button is-align-self-flex-end is-light"
+                onClick={() => {
+                  setLoading(true);
+                  router.push({
+                    pathname: "/create",
+                    query: { data: JSON.stringify(result) },
+                  });
+                }}
               >
                 Select
               </button>
             </div>
           </div>
         ))}
-        { loading && 
-          <progress className="progress is-small is-info" max="100">15%</progress>
-        }
+      {loading && (
+        <progress className="progress is-small is-info" max="100">
+          15%
+        </progress>
+      )}
     </>
   );
 }

@@ -1,4 +1,4 @@
-@import 'bulma/css/bulma.css';
+@import "bulma/css/bulma.css";
 
 html,
 body {
@@ -15,6 +15,16 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+.boxShadow {
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 50px;
+}
+
+.fullHeight {
+  height: 100vh;
+  overflow-y: hidden;
+  border: solid 1px #eeeeee;
 }
 
 /*
