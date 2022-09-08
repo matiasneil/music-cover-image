@@ -72,7 +72,7 @@ export default function Create() {
   return (
     <>
       <div className="container fullHeight boxShadow">
-        <NavBar changeLangLabel={t("navbar.changeLangLabel")}/>
+        <NavBar changeLangLabel={t("navbar.changeLangLabel")} />
         {!finished && (
           <div className="is-flex is-align-items-center is-flex-direction-column">
             {/* 
@@ -250,7 +250,6 @@ export default function Create() {
         )}
         {finished && (
           <div className="is-flex is-align-items-center is-flex-direction-column">
-            
             <div className="section mt-5">
               <h1 className="title">{t("create.done.title")}😊</h1>
               <p className="subtitle">{t("create.done.subtitle")}</p>
@@ -266,40 +265,68 @@ export default function Create() {
             <div className="is-flex is-flex-direction-column is-align-items-start">
               <p className="my-5">
                 <b>{t("create.done.doneBy")}</b>{" "}
-                <a href="https://www.twitter.com/matiasneil" target='_blank'>
-                  <span class="tag is-info is-light">@matiasneil</span>
+                <a
+                  href="https://www.twitter.com/matiasneil"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <span className="tag is-info is-light">@matiasneil</span>
                 </a>
               </p>
               <p>
                 <b>{t("create.done.using")}</b>
                 <ul className="pl-5">
                   <li>
-                    <a href="https://developer.spotify.com/documentation/web-api/" target='_blank'>
+                    <a
+                      href="https://developer.spotify.com/documentation/web-api/"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
                       <span>spotify API</span>
                     </a>
                   </li>
                   <li>
-                    <a href="https://nextjs.org/" target='_blank'>
+                    <a
+                      href="https://nextjs.org/"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
                       <span>next.js</span>
                     </a>
                   </li>
                   <li>
-                    <a href="https://bulma.io/" target='_blank'>
+                    <a
+                      href="https://bulma.io/"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
                       <span>bulma.css</span>
                     </a>
                   </li>
                   <li>
-                    <a href="https://html2canvas.hertzen.com/" target='_blank'>
+                    <a
+                      href="https://html2canvas.hertzen.com/"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
                       <span>html2canvas</span>
                     </a>
                   </li>
                   <li>
-                    <a href="https://github.com/i18next/next-i18next" target='_blank'>
+                    <a
+                      href="https://github.com/i18next/next-i18next"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
                       <span>next-i18next</span>
                     </a>
                   </li>
                   <li>
-                    <a href="https://github.com/Vibrant-Colors/node-vibrant" target='_blank'>
+                    <a
+                      href="https://github.com/Vibrant-Colors/node-vibrant"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
                       <span>node-vibrant</span>
                     </a>
                   </li>
@@ -313,7 +340,7 @@ export default function Create() {
                 router.push("https://github.com/matiasneil/music-cover-image")
               }
             >
-              <span class="icon is-small">
+              <span className="icon is-small">
                 <Image
                   src="/assets/logo/github.png"
                   width={20}
