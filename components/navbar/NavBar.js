@@ -27,14 +27,14 @@ function NavBar(props) {
             <img src="/assets/logo/sc-logo.png" width="112" height="28"></img>
           </a>
         </Link>
-        <span
+        {/* <span
             onClick={() =>
               currentLocale == 'en' ? changeLocale("es") : changeLocale("en")
             }
             style={{cursor: 'pointer', padding: '0.5rem 0.75rem'}}
           >
             {props.changeLangLabel}
-          </span>
+          </span> */}
       </div>
     </nav>
   );
