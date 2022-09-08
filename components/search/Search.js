@@ -59,7 +59,7 @@ function Search(props) {
             className="input"
             onChange={onChange}
             onKeyDown={onKeyDown}
-            placeholder="search artist | song name"
+            placeholder={props.placeholder}
             type="text"
             value={query}
           />
@@ -69,7 +69,7 @@ function Search(props) {
             className="button is-fullwidth is-info is-light"
             onClick={onClick}
           >
-            Search
+            {props.buttonLabel}
           </button>
         </div>
       </div>
@@ -78,7 +78,14 @@ function Search(props) {
           {results.map((result) => (
             <div
               key={result.id}
-              className="box is-flex is-flex-direction-row is-align-items-center"
+              className={`${styles.buttonBox} box is-flex is-flex-direction-row is-align-items-center`}
+              onClick={() => {
+                setLoading(true);
+                router.push({
+                  pathname: "/create",
+                  query: { data: JSON.stringify(result) },
+                });
+              }}
             >
               <img
                 src={result.album.images[2].url}
@@ -90,20 +97,6 @@ function Search(props) {
                 <span>{result.name}</span>
                 <span>{result.album.name}</span>
                 <span>{result.artists[0].name}</span>
-              </div>
-              <div className="is-flex is-flex-direction-column is-flex-grow-1">
-                <button
-                  className="button is-align-self-flex-end is-light"
-                  onClick={() => {
-                    setLoading(true);
-                    router.push({
-                      pathname: "/create",
-                      query: { data: JSON.stringify(result) },
-                    });
-                  }}
-                >
-                  Select
-                </button>
               </div>
             </div>
           ))}

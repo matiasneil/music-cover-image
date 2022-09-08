@@ -1,0 +1,42 @@
+{
+  "index": {
+    "title": "Show your favorite song",
+    "subtitle": "Search it, build your cover and upload it to Twitter."
+  },
+  "search": {
+    "placeholder": "search artist | song name",
+    "buttonLabel": "Search",
+    "selectSongLabel": "Select"
+  },
+  "create": {
+    "controls": {
+      "label": "player controls",
+      "white": "white",
+      "black": "black"
+    },
+    "background": {
+      "label": "background",
+      "solid": {
+        "label": "solid",
+        "color": "color"
+      },
+      "gradient": {
+        "label": "gradient",
+        "from": "from",
+        "to": "to"
+      }
+    },
+    "download": "Download",
+    "done": {
+      "title": "Done!",
+      "subtitle": "the download will start soon...",
+      "tryAgain": "Create another",
+      "viewGithub": "View on GitHub",
+      "doneBy": "done by",
+      "using": "using"
+    }
+  },
+  "navbar": {
+    "changeLangLabel": "ES"
+  }
+}

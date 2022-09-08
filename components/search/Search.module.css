@@ -4,3 +4,11 @@
     max-height: 65vh;
     padding-right: 10px;
 }
+
+.buttonBox {
+    cursor: pointer;
+}
+
+.buttonBox:hover {
+    background-color: #EEEEEE;
+}

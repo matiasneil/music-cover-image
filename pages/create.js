@@ -7,14 +7,20 @@ import Switch from "../components/switch/Switch";
 import NavBar from "../components/navbar/NavBar";
 import html2canvas from "html2canvas";
 import ColorSelect from "../components/color-select/ColorSelect";
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import Image from "next/image";
 
 export default function Create() {
   const router = useRouter();
   const result = JSON.parse(router.query.data);
 
+  const { t } = useTranslation();
+
   /* STATES */
   const [color, setColor] = useState("white");
   const [palette, setPalette] = useState([]);
+  const [finished, setFinished] = useState(false);
   const [background, setBackground] = useState("solid");
   const [backgroundColor, setBackgroundColor] = useState("");
   const [backgroundGradient, setBackgroundGradient] = useState({
@@ -65,181 +71,265 @@ export default function Create() {
 
   return (
     <>
-      <div className='container fullHeight boxShadow'>
-        <NavBar />
-        <div className="is-flex is-align-items-center is-flex-direction-column">
-          {/* 
-        ----------------------
-        --------COVER---------
-        ----------------------
-        */}
+      <div className="container fullHeight boxShadow">
+        <NavBar changeLangLabel={t("navbar.changeLangLabel")}/>
+        {!finished && (
+          <div className="is-flex is-align-items-center is-flex-direction-column">
+            {/* 
+            ----------------------
+            --------COVER---------
+            ----------------------
+            */}
 
-          <div
-            className={`${styles.cover} is-flex is-flex-direction-column is-justify-content-center my-5`}
-            style={{
-              background:
-                background == "solid"
-                  ? backgroundColor
-                  : `linear-gradient(90deg, ${backgroundGradient.start} 0%, ${backgroundGradient.end} 100%)`,
-            }}
-            id="capture"
-          >
-            <div className="is-flex is-align-items-center">
-              <img
-                src={result.album.images[1].url}
-                className={styles.albumImg}
-              ></img>
-
-              <div
-                className="is-flex is-flex-direction-column is-justify-content-space-around py-5"
-                style={{ width: "100%", paddingLeft: "20px" }}
-              >
-                <div className="mb-3">
-                  <div
-                    className="is-flex is-flex-direction-column"
-                    style={{ color: color }}
-                  >
-                    <span className={styles.song}>{trackName}</span>
-                    <span className={styles.artist}>
-                      {trackArtists(result.artists)}
-                    </span>
-                  </div>
-                </div>
+            <div
+              className={`${styles.cover} is-flex is-flex-direction-column is-justify-content-center my-5`}
+              style={{
+                background:
+                  background == "solid"
+                    ? backgroundColor
+                    : `linear-gradient(90deg, ${backgroundGradient.start} 0%, ${backgroundGradient.end} 100%)`,
+              }}
+              id="capture"
+            >
+              <div className="is-flex is-align-items-center">
+                <img
+                  src={result.album.images[1].url}
+                  className={styles.albumImg}
+                ></img>
 
                 <div
-                  className={`${styles.timeBar} mb-2`}
-                  style={{ backgroundColor: color }}
+                  className="is-flex is-flex-direction-column is-justify-content-space-around py-5"
+                  style={{ width: "100%", paddingLeft: "20px" }}
                 >
+                  <div className="mb-3">
+                    <div
+                      className="is-flex is-flex-direction-column"
+                      style={{ color: color }}
+                    >
+                      <span className={styles.song}>{trackName}</span>
+                      <span className={styles.artist}>
+                        {trackArtists(result.artists)}
+                      </span>
+                    </div>
+                  </div>
+
                   <div
-                    className={styles.currentTimeBar}
+                    className={`${styles.timeBar} mb-2`}
                     style={{ backgroundColor: color }}
                   >
                     <div
-                      className={styles.currentTimeDot}
+                      className={styles.currentTimeBar}
                       style={{ backgroundColor: color }}
-                    ></div>
+                    >
+                      <div
+                        className={styles.currentTimeDot}
+                        style={{ backgroundColor: color }}
+                      ></div>
+                    </div>
+                  </div>
+
+                  <div
+                    className={`${styles.trackTime} is-flex is-justify-content-space-between mb-3`}
+                    style={{ color: color }}
+                  >
+                    <div>{getFormattedTime(currentTimeInSeconds)}</div>
+                    <div>{getFormattedTime(trackLengthInSeconds)}</div>
+                  </div>
+
+                  <div className="is-flex is-justify-content-space-between">
+                    <img src={`/assets/svg/${color}/random.svg`}></img>
+                    <img src={`/assets/svg/${color}/prev.svg`}></img>
+                    <img src={`/assets/svg/${color}/pause.svg`}></img>
+                    <img src={`/assets/svg/${color}/next.svg`}></img>
+                    <img src={`/assets/svg/${color}/repeat.svg`}></img>
                   </div>
                 </div>
+              </div>
+            </div>
 
-                <div
-                  className={`${styles.trackTime} is-flex is-justify-content-space-between mb-3`}
-                  style={{ color: color }}
-                >
-                  <div>{getFormattedTime(currentTimeInSeconds)}</div>
-                  <div>{getFormattedTime(trackLengthInSeconds)}</div>
-                </div>
+            <div
+              className={`${styles.configurations} is-flex is-flex-direction-column is-justify-content-center`}
+            >
+              {/* 
+              ----------------------
+              ------CONTROLS------
+              ----------------------
+              */}
 
-                <div className="is-flex is-justify-content-space-between">
-                  <img src={`/assets/svg/${color}/random.svg`}></img>
-                  <img src={`/assets/svg/${color}/prev.svg`}></img>
-                  <img src={`/assets/svg/${color}/pause.svg`}></img>
-                  <img src={`/assets/svg/${color}/next.svg`}></img>
-                  <img src={`/assets/svg/${color}/repeat.svg`}></img>
+              <span className="mb-1">
+                <b>{t("create.controls.label")}</b>
+              </span>
+              <div>
+                <div className={`${styles.switchContainer} mb-5`}>
+                  <small>{t("create.controls.white")}</small>
+                  <Switch
+                    onChangeFn={(isBlack) => {
+                      setColor(isBlack ? "black" : "white");
+                    }}
+                  ></Switch>
+                  <small>{t("create.controls.black")}</small>
                 </div>
               </div>
+
+              {/* 
+              ----------------------
+              ------BACKGROUND------
+              ----------------------
+              */}
+
+              <span className="mb-1">
+                <b>{t("create.background.label")}</b>
+              </span>
+              <div>
+                <div className={`${styles.switchContainer} mb-5`}>
+                  <small>{t("create.background.solid.label")}</small>
+                  <Switch
+                    onChangeFn={(isGradient) => {
+                      setBackground(isGradient ? "gradient" : "solid");
+                    }}
+                  ></Switch>
+                  <small>{t("create.background.gradient.label")}</small>
+                </div>
+              </div>
+
+              {background === "solid" && (
+                <>
+                  <small>{t("create.background.solid.color")}</small>
+                  <ColorSelect
+                    palette={palette}
+                    setBgColor={setBackgroundColor}
+                    selectedColor={backgroundColor}
+                  />
+                </>
+              )}
+
+              {background === "gradient" && (
+                <>
+                  <small>{t("create.background.gradient.from")}</small>
+                  <ColorSelect
+                    palette={palette}
+                    setBgColor={(color) =>
+                      setBackgroundGradient({
+                        ...backgroundGradient,
+                        start: color,
+                      })
+                    }
+                    selectedColor={backgroundGradient.start}
+                  />
+                  <small>{t("create.background.gradient.to")}</small>
+                  <ColorSelect
+                    palette={palette}
+                    setBgColor={(color) =>
+                      setBackgroundGradient({
+                        ...backgroundGradient,
+                        end: color,
+                      })
+                    }
+                    selectedColor={backgroundGradient.end}
+                  />
+                </>
+              )}
+
+              {/* 
+              ----------------------
+              -------DOWNLOAD-------
+              ----------------------
+              */}
+
+              <button
+                className="button is-light is-info"
+                onClick={() => {
+                  saveImage(result.name);
+                  setFinished(true);
+                }}
+              >
+                {t("create.download")}
+              </button>
             </div>
           </div>
-
-          <div
-            className={`${styles.configurations} is-flex is-flex-direction-column is-justify-content-center`}
-          >
-            {/* 
-          ----------------------
-          ------CONTROLS------
-          ----------------------
-          */}
-
-            <span className="mb-1">
-              <b>player controls</b>
-            </span>
-            <div>
-              <div className={`${styles.switchContainer} mb-5`}>
-                <small>white</small>
-                <Switch
-                  onChangeFn={(isBlack) => {
-                    setColor(isBlack ? "black" : "white");
-                  }}
-                ></Switch>
-                <small>black</small>
-              </div>
+        )}
+        {finished && (
+          <div className="is-flex is-align-items-center is-flex-direction-column">
+            
+            <div className="section mt-5">
+              <h1 className="title">{t("create.done.title")}😊</h1>
+              <p className="subtitle">{t("create.done.subtitle")}</p>
             </div>
-
-            {/* 
-          ----------------------
-          ------BACKGROUND------
-          ----------------------
-          */}
-
-            <span className="mb-1">
-              <b>background</b>
-            </span>
-            <div>
-              <div className={`${styles.switchContainer} mb-5`}>
-                <small>solid</small>
-                <Switch
-                  onChangeFn={(isGradient) => {
-                    setBackground(isGradient ? "gradient" : "solid");
-                  }}
-                ></Switch>
-                <small>gradient</small>
-              </div>
-            </div>
-
-            {background === "solid" && (
-              <>
-                <small>color</small>
-                <ColorSelect
-                  palette={palette}
-                  setBgColor={setBackgroundColor}
-                  selectedColor={backgroundColor}
-                />
-              </>
-            )}
-
-            {background === "gradient" && (
-              <>
-                <small>from</small>
-                <ColorSelect
-                  palette={palette}
-                  setBgColor={(color) =>
-                    setBackgroundGradient({
-                      ...backgroundGradient,
-                      start: color,
-                    })
-                  }
-                  selectedColor={backgroundGradient.start}
-                />
-                <small>to</small>
-                <ColorSelect
-                  palette={palette}
-                  setBgColor={(color) =>
-                    setBackgroundGradient({ ...backgroundGradient, end: color })
-                  }
-                  selectedColor={backgroundGradient.end}
-                />
-              </>
-            )}
-
-            {/* 
-          ----------------------
-          -------DOWNLOAD-------
-          ----------------------
-          */}
 
             <button
-              className="button is-light is-info"
-              onClick={() => saveImage(result.name)}
+              className="button is-light is-info mt-2 mb-5"
+              onClick={() => router.push("/")}
             >
-              Download
+              {t("create.done.tryAgain")}
+            </button>
+
+            <div className="is-flex is-flex-direction-column is-align-items-start">
+              <p className="my-5">
+                <b>{t("create.done.doneBy")}</b>{" "}
+                <a href="https://www.twitter.com/matiasneil" target='_blank'>
+                  <span class="tag is-info is-light">@matiasneil</span>
+                </a>
+              </p>
+              <p>
+                <b>{t("create.done.using")}</b>
+                <ul className="pl-5">
+                  <li>
+                    <a href="https://developer.spotify.com/documentation/web-api/" target='_blank'>
+                      <span>spotify API</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="https://nextjs.org/" target='_blank'>
+                      <span>next.js</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="https://bulma.io/" target='_blank'>
+                      <span>bulma.css</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="https://html2canvas.hertzen.com/" target='_blank'>
+                      <span>html2canvas</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/i18next/next-i18next" target='_blank'>
+                      <span>next-i18next</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/Vibrant-Colors/node-vibrant" target='_blank'>
+                      <span>node-vibrant</span>
+                    </a>
+                  </li>
+                </ul>
+              </p>
+            </div>
+
+            <button
+              className="button my-5"
+              onClick={() =>
+                router.push("https://github.com/matiasneil/music-cover-image")
+              }
+            >
+              <span class="icon is-small">
+                <Image
+                  src="/assets/logo/github.png"
+                  width={20}
+                  height={20}
+                ></Image>
+              </span>
+              <span>{t("create.done.viewGithub")}</span>
             </button>
           </div>
-        </div>
+        )}
       </div>
     </>
   );
 }
 
-export async function getServerSideProps({ query }) {
+export async function getServerSideProps({ query, locale }) {
   if (!query.data) {
     return {
       redirect: {
@@ -249,7 +339,11 @@ export async function getServerSideProps({ query }) {
     };
   }
 
-  return { props: {} };
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["common"])),
+    },
+  };
 }
 
 /* FUNCTIONS */

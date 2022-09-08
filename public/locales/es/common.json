@@ -1,0 +1,42 @@
+{
+  "index": {
+    "title": "Mostrá tu canción favorita",
+    "subtitle": "Buscala, construí tu portada y subila a Twitter."
+  },
+  "search": {
+    "placeholder": "buscá por artista o canción",
+    "buttonLabel": "Buscar",
+    "selectSongLabel": "Seleccionar"
+  },
+  "create": {
+    "controls": {
+      "label": "controles",
+      "white": "blanco",
+      "black": "negro"
+    },
+    "background": {
+      "label": "fondo",
+      "solid": {
+        "label": "sólido",
+        "color": "color"
+      },
+      "gradient": {
+        "label": "gradiente",
+        "from": "desde",
+        "to": "hasta"
+      }
+    },
+    "download": "Descargar",
+    "done": {
+      "title": "¡Listo!",
+      "subtitle": "la descarga comenzará en breve...",
+      "tryAgain": "Crear otra",
+      "viewGithub": "Ver en GitHub",
+      "doneBy": "hecho por",
+      "using": "usando"
+    }
+  },
+  "navbar": {
+    "changeLangLabel": "EN"
+  }
+}

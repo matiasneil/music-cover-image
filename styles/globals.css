@@ -32,11 +32,11 @@ a {
 }
 
 ::-webkit-scrollbar-track {
-  background: #dddddd;
+  background: #EEEEEE;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #777777;
+  background: #CCCCCC;
 }
 
 /*
