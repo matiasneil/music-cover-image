@@ -2,6 +2,7 @@
 
 html,
 body {
+  height: 100%;
   padding: 0;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
@@ -22,9 +23,7 @@ a {
 }
 
 .fullHeight {
-  height: 100vh;
-  overflow-y: hidden;
-  border: solid 1px #eeeeee;
+  height: 100%;
 }
 
 ::-webkit-scrollbar {

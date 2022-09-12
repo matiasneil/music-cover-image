@@ -71,7 +71,7 @@ export default function Create() {
 
   return (
     <>
-      <div className="container fullHeight boxShadow">
+      <div className="container fullHeight">
         <NavBar changeLangLabel={t("navbar.changeLangLabel")} />
         {!finished && (
           <div className="is-flex is-align-items-center is-flex-direction-column">
@@ -237,7 +237,7 @@ export default function Create() {
               */}
 
               <button
-                className="button is-light is-info"
+                className="button is-light is-info mb-5"
                 onClick={() => {
                   saveImage(result.name);
                   setFinished(true);
@@ -390,6 +390,7 @@ const str_pad_left = (string, pad, length) => {
 
 const saveImage = (songName) => {
   html2canvas(document.querySelector("#capture"), {
+    windowWidth: '1920px',
     logging: true,
     letterRendering: 1,
     allowTaint: false,

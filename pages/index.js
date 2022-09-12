@@ -12,7 +12,7 @@ function Home({ data }) {
 
   return (
     <>
-      <div className="container fullHeight boxShadow">
+      <div className="container fullHeight">
         <NavBar changeLangLabel={t("navbar.changeLangLabel")}/>
         <section className="section pb-0">
           <div className="columns is-centered">

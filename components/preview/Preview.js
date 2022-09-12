@@ -27,7 +27,7 @@ function Preview() {
       <div className={styles.preview}>
         <img
           src="/assets/img/twitter-layout.png"
-          className={`${styles.twitterLayout} boxShadow`}
+          className={`${styles.twitterLayout}`}
         ></img>
         <img
           src={`/assets/img/${cover}.png`}
