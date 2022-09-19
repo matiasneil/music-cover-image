@@ -1,4 +1,4 @@
-<img alt="SongCover App" height="100" src="https://songcover.vercel.app/assets/logo/sc-logo.png" />
+<img alt="SongCover App" src="https://songcover.vercel.app/assets/logo/sc-logo.png" />
 
 ## _show your musical taste_
 
@@ -10,7 +10,7 @@ create a cover image for your social network
 
 ## _examples_
 
-<img alt="Taylor Swift Cover" height="150" src="https://songcover.vercel.app/assets/img/taylor.png" />
-<img alt="Prince Cover" height="150" src="https://songcover.vercel.app/assets/img/prince.png" />
-<img alt="Radiohead Cover" height="150" src="https://songcover.vercel.app/assets/img/radiohead.png" />
-<img alt="Rina Sawayama Cover" height="150" src="https://songcover.vercel.app/assets/img/rina.png" />
+<img alt="Taylor Swift Cover" src="https://songcover.vercel.app/assets/img/taylor.png" />
+<img alt="Prince Cover" src="https://songcover.vercel.app/assets/img/prince.png" />
+<img alt="Radiohead Cover"  src="https://songcover.vercel.app/assets/img/radiohead.png" />
+<img alt="Rina Sawayama Cover"  src="https://songcover.vercel.app/assets/img/rina.png" />
