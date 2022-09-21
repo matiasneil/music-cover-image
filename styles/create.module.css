@@ -20,24 +20,28 @@
 
 .artist {
   font-family: "GothamBook";
-  font-size: 25px;
-  line-height: 30px;
+  font-size: 75px;
+  line-height: 90px;
 }
 
 .song {
   font-family: "GothamMedium";
-  font-size: 25px;
-  line-height: 30px;
+  font-size: 75px;
+  line-height: 90px;
 }
 
 .trackTime {
   font-family: "GothamLight";
-  font-size: 15px;
+  font-size: 45px;
 }
 
 .albumImg {
-  width: 200px;
-  height: 200px;
+  width: 600px;
+  height: 600px;
+}
+
+.playerControls img {
+  width: 120px;
 }
 
 .switchContainer {
@@ -72,57 +76,78 @@
   border-radius: 50%;
 }
 
-.cover {
-  transform: scale(0.35);
-  width: 1000px;
-  height: 335px;
-  padding: 50px 150px 50px 150px;
+.cover {  
+  transform: scale(0.115);
+
+  width: 3000px;
+  height: 1000px;
+  padding: 150px 450px 150px 450px;
+
+  position: relative;
+  top: -370px;
 }
 
 .configurations {
   position: relative;
-  top: -100px;
+  top: -720px;
 }
 
 @media screen and (min-width: 525px) {
   .cover {
-    transform: scale(0.5);
+    top: -370px;
+    transform: scale(0.17);
   }
 
   .configurations {
     position: relative;
-    top: -80px;
+    top: -720px;
   }
 }
 
 @media screen and (min-width: 720px) {
   .cover {
-    transform: scale(0.7);
+    top: -370px;
+    transform: scale(0.23);
   }
 
   .configurations {
     position: relative;
-    top: -50px;
+    top: -700px;
   }
 }
 
 @media screen and (min-width: 820px) {
   .cover {
-    transform: scale(0.8);
+    top: -350px;
+    transform: scale(0.27);
   }
 
   .configurations {
     position: relative;
-    top: -30px;
+    top: -670px;
   }
 }
 
-@media screen and (min-width: 1025px) {
+@media screen and (min-width: 1216px) {
   .cover {
-    transform: scale(1);
+    top: -300px;
+    transform: scale(0.34);
   }
 
   .configurations {
-    position: initial;
+    position: relative;
+    top: -600px;
+  }
+}
+
+@media screen and (min-width: 1408px) {
+  .cover {
+    top: -280px;
+    transform: scale(0.4);
+  }
+
+  .configurations {
+    position: relative;
+    top: -550px;
   }
 }

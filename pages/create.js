@@ -93,13 +93,13 @@ export default function Create() {
             >
               <div className="is-flex is-align-items-center">
                 <img
-                  src={result.album.images[1].url}
+                  src={result.album.images[0].url}
                   className={styles.albumImg}
                 ></img>
 
                 <div
                   className="is-flex is-flex-direction-column is-justify-content-space-around py-5"
-                  style={{ width: "100%", paddingLeft: "20px" }}
+                  style={{ width: "100%", paddingLeft: "60px" }}
                 >
                   <div className="mb-3">
                     <div
@@ -136,7 +136,7 @@ export default function Create() {
                     <div>{getFormattedTime(trackLengthInSeconds)}</div>
                   </div>
 
-                  <div className="is-flex is-justify-content-space-between">
+                  <div className={`${styles.playerControls} is-flex is-justify-content-space-between`}>
                     <img src={`/assets/svg/${color}/random.svg`}></img>
                     <img src={`/assets/svg/${color}/prev.svg`}></img>
                     <img src={`/assets/svg/${color}/pause.svg`}></img>
@@ -390,10 +390,9 @@ const str_pad_left = (string, pad, length) => {
 
 const saveImage = (songName) => {
   html2canvas(document.querySelector("#capture"), {
-    windowWidth: '1920px',
-    logging: true,
+    windowWidth: 1920,
+    scale: 2.5,
     letterRendering: 1,
-    allowTaint: false,
     useCORS: true,
   }).then((canvas) => {
     saveAs(canvas.toDataURL(), `${songName} - Cover`);
